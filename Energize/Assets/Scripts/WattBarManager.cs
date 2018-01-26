@@ -7,6 +7,7 @@ public class WattBarManager : MonoBehaviour
 {
 
     public Image currentWattBar;
+    public Text text;
 
     private enum BATTERY_STATES
     {
@@ -44,7 +45,16 @@ public class WattBarManager : MonoBehaviour
         float ratio = hitpoint / maxHitpoint;
         currentWattBar.rectTransform.localScale = new Vector3(ratio, 1, 1);
         CheckChange();
+        text.text = (ratio * 100).ToString() + '%';
+        if(hitpoint < 55)
+        {
+            text.color = Color.white;
+        }
 
+        if(hitpoint >= 55)
+        {
+            text.color = Color.black;
+        }
     }
 
     /// <summary>

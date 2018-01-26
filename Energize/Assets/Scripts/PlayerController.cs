@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-    private Vector3 firstPoint;   //First touch position
-    private Vector3 lastPoint;   //Last touch position
+    private int speed = 5;
+    private Vector3 fp;   //First touch position
+    private Vector3 lp;   //Last touch position
     private float dragDistance;  //minimum distance for a swipe to be registered
-    private Vector2 position;
-    private SpriteRenderer _SpriteRenderer;
-    private Color _newColor;
-
+    private Vector3 pos;
 
     // Use this for initialization
     void Start () {
@@ -18,69 +16,71 @@ public class PlayerController : MonoBehaviour {
 
     private void initializeVariables()
     {
-        _SpriteRenderer = GetComponent<SpriteRenderer>();
-        dragDistance = Screen.width * 50 / 100;
-         position = transform.position;
+        pos = transform.position;
+        dragDistance = Screen.height * 15 / 100; //dragDistance is 15% height of the screen
+
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        swipeMovement();
-    }
-
-    private void swipeMovement()
-    {
+        pos = transform.position;
         if (Input.touchCount == 1) // user is touching the screen with a single touch
         {
             Touch touch = Input.GetTouch(0); // get the touch
             if (touch.phase == TouchPhase.Began) //check for the first touch
             {
-                firstPoint = touch.position;
-                lastPoint = touch.position;
+                fp = touch.position;
+                lp = touch.position;
             }
             else if (touch.phase == TouchPhase.Moved) // update the last position based on where they moved
             {
-                lastPoint = touch.position;
+                lp = touch.position;
             }
             else if (touch.phase == TouchPhase.Ended) //check if the finger is removed from the screen
             {
-                lastPoint = touch.position;  //last touch position. Ommitted if you use list
+                lp = touch.position;  //last touch position. Ommitted if you use list
 
                 //Check if drag distance is greater than 20% of the screen height
-                if (Mathf.Abs(lastPoint.x - firstPoint.x) > dragDistance || Mathf.Abs(lastPoint.y - firstPoint.y) > dragDistance)
+                if (Mathf.Abs(lp.x - fp.x) > dragDistance || Mathf.Abs(lp.y - fp.y) > dragDistance)
                 {//It's a drag
-                 //check if the drag is vertical or horizontal
-                    if (Mathf.Abs(lastPoint.x - firstPoint.x) > Mathf.Abs(lastPoint.y - firstPoint.y))
-                    {   //If the horizontal movement is greater than the vertical movement...
-                        if ((lastPoint.x > firstPoint.x))  //If the movement was to the right)
-                        {   //Right swipe
-                            gameObject.SetActive(false);
-                            _SpriteRenderer.color = Color.white;
-                        }
-                        else
-                        {   //Left swipe
-                            _SpriteRenderer.color = Color.green;
-                        }
-                    }
-                    else
-                    {   //the vertical movement is greater than the horizontal movement
-                        if (lastPoint.y > firstPoint.y)  //If the movement was up
-                        {   //Up swipe
-                            _SpriteRenderer.color = Color.red;
-                        }
-                        else
-                        {   //Down swipe
-                            _SpriteRenderer.color = Color.blue;
-                        }
-                    }
+                
+                    pos = Camera.main.ScreenToWorldPoint(lp);
+                    pos.z = transform.position.z;
+
+
                 }
                 else
                 {   //It's a tap as the drag distance is less than 20% of the screen height
                     Debug.Log("Tap");
                 }
             }
+
+
+           /** if (Input.touchCount > 0)
+            {
+                Vector2 touchPosition = Input.GetTouch(0).position;
+                touchPosition.x = this.transform.position.x - Camera.main.transform.position.x;
+                touchPosition = Camera.main.ScreenToWorldPoint(touchPosition);
+                touchPosition.y = this.transform.position.y;
+                this.transform.position = Vector2.MoveTowards(this.transform.position, touchPosition, Time.deltaTime * speed);
+            }**/
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Wall")
+        {
+            this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+        }
+    }
+
+    private void newSwipeMovement()
+    {
+       
+    }
+
+    
 }
 

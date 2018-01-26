@@ -1,10 +1,10 @@
 # =============== #
 # Unity generated #
 # =============== #
-Energize/Temp/
-Energize/Obj/
-Energize/UnityGenerated/
-Energize/Library/
+Energize/Temp/*
+Energize/Obj/*
+Energize/UnityGenerated/*
+Energize/Library/*
 Energize/Assets/AssetStoreTools*
 
 # ===================================== #

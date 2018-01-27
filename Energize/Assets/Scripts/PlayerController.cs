@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
@@ -12,12 +13,13 @@ public class PlayerController : MonoBehaviour {
     private Vector3 pos;
     public LightningMoveScript lightningMoveScript;
     private Vector2 nextPosition;
-    private bool isMoving;
     public GameObject anchorPointsParent;
+    public GameObject canvas;
     Transform[] anchorPointsArray;
     private Vector2 dir;
     bool inAir = false;
 
+ 
 
     // Use this for initialization
     void Start () {
@@ -30,7 +32,6 @@ public class PlayerController : MonoBehaviour {
     {
         pos = transform.position;
         dragDistance = Screen.height * 15 / 100; //dragDistance is 15% height of the screen
-        Vector2 nextPosition = new Vector2();
         anchorPointsArray = new Transform[anchorPointsParent.transform.childCount];
         for(int i = 0; i < anchorPointsArray.Length; i++)
         {
@@ -42,21 +43,15 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     private void Update()
     {
+        RectTransform objectRectTransform = canvas.GetComponent<RectTransform>();
+        if (transform.position.y > 280f || transform.position.y < -50)
+        {
+            SceneManager.LoadScene(0);
+        }
+
         if(inAir == true)
         {
             inAir = lightningMoveScript.moving;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            isMoving = true;
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            isMoving = false;
-        }
-        if(isMoving == true)
-        {
-            gotoPosition(nextPosition);
         }
         pos = transform.position;
 
@@ -82,26 +77,6 @@ public class PlayerController : MonoBehaviour {
                 {
 
                     lp = touch.position;  //last touch position. Ommitted if you use list
-
-
-                    /*for (int i = 0; i < anchorPointsArray.Length; i++)
-                    {
-                        text.text = "In For" + i;
-
-                        if (anchorPointsArray[i].position.x - lp.x < anchorPointsArray[i + 1].position.x - lp.x &&
-                            anchorPointsArray[i].position.y - lp.y < anchorPointsArray[i + 1].position.y - lp.y)
-                        {
-                            text.text = "in if" + i;
-
-                            lightningMoveScript.ButtonForMove(anchorPointsArray[i].position);
-                            text.text = "End If" + i;
-
-
-                        }
-
-                    }*/
-
-
                     dir = lp - fp;
                     dir.Normalize();
 
@@ -129,15 +104,6 @@ public class PlayerController : MonoBehaviour {
 
                 }
             }
-
-                /** if (Input.touchCount > 0)
-                 {
-                     Vector2 touchPosition = Input.GetTouch(0).position;
-                     touchPosition.x = this.transform.position.x - Camera.main.transform.position.x;
-                     touchPosition = Camera.main.ScreenToWorldPoint(touchPosition);
-                     touchPosition.y = this.transform.position.y;
-                     this.transform.position = Vector2.MoveTowards(this.transform.position, touchPosition, Time.deltaTime * speed);
-                 }**/
             }
 
         
@@ -149,11 +115,6 @@ public class PlayerController : MonoBehaviour {
         {
             this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
         }
-    }
-
-    private void newSwipeMovement()
-    {
-       
     }
 
     private void gotoPosition(Vector2 pos)

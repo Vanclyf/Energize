@@ -19,7 +19,7 @@ public class WattBarManager : MonoBehaviour
     }
 
     private BATTERY_STATES currentState;
-    private float hitpoint = 100;
+    public float hitpoint = 100;
     private float maxHitpoint = 100;
 
     private void Start()

@@ -31,7 +31,7 @@ public class WattBarManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            LoseWatt(1);
+            TurnDown4Watt(1);
         }
 
         if (Input.GetKeyDown(KeyCode.D))

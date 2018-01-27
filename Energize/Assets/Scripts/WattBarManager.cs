@@ -61,7 +61,7 @@ public class WattBarManager : MonoBehaviour
     /// When the player loses watt
     /// </summary>
     /// <param name="wattLost">The watt lost.</param>
-    public void LoseWatt(float wattLost)
+    public void TurnDown4Watt(float wattLost)
     {
         hitpoint -= wattLost;
         if (hitpoint <= 0)

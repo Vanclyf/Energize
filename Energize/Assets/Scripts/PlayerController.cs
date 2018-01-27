@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
+﻿using UnityEngine;
+
+
 
 public class PlayerController : MonoBehaviour {
     private int speed = 5;
@@ -11,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     private float dragDistance;  //minimum distance for a swipe to be registered
     private Vector3 pos;
     public LightningMoveScript lightningMoveScript;
+    public GameObject wattManager;
     private Vector2 nextPosition;
     private bool isMoving;
     public GameObject anchorPointsParent;
@@ -145,9 +144,9 @@ public class PlayerController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Wall")
+        if(collision.gameObject.tag == "Obstacles")
         {
-            this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+            wattManager.GetComponent<WattBarManager>().TurnDown4Watt(20f);
         }
     }
 

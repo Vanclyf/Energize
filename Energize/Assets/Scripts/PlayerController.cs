@@ -11,8 +11,9 @@ public class PlayerController : MonoBehaviour {
     private float dragDistance;  //minimum distance for a swipe to be registered
     private Vector3 pos;
     public LightningMoveScript lightningMoveScript;
+    public WattBarManager wattBarManager;
     private Vector2 nextPosition;
-    private bool isMoving;
+    private bool isMoving = false;
     public GameObject anchorPointsParent;
     Transform[] anchorPointsArray;
     private Vector2 dir;
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour {
                 {
 
                     lp = touch.position;  //last touch position. Ommitted if you use list
-
+                    wattBarManager.LoseWatt(2);
 
                     /*for (int i = 0; i < anchorPointsArray.Length; i++)
                     {

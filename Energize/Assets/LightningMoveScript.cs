@@ -12,7 +12,7 @@ public class LightningMoveScript : MonoBehaviour {
     Vector3 dir;
     float vel;
     int i = 1;
-    public bool moving;
+    public bool moving = false;
     public Text text;
 
 

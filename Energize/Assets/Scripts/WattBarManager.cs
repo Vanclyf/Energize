@@ -61,7 +61,7 @@ public class WattBarManager : MonoBehaviour
     /// When the player loses watt
     /// </summary>
     /// <param name="wattLost">The watt lost.</param>
-    void LoseWatt(float wattLost)
+    public void LoseWatt(float wattLost)
     {
         hitpoint -= wattLost;
         if (hitpoint <= 0)
@@ -76,7 +76,7 @@ public class WattBarManager : MonoBehaviour
     /// When the player gains watt
     /// </summary>
     /// <param name="wattGained">The watt gained.</param>
-    void GainWatt(float wattGained)
+    public void GainWatt(float wattGained)
     {
         hitpoint += wattGained;
         Debug.Log("HitPoints: " + hitpoint);

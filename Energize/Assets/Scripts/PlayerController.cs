@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     private int speed = 5;
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 lp;   //Last touch position
     private float dragDistance;  //minimum distance for a swipe to be registered
     private Vector3 pos;
+    public LightningMoveScript lightningMoveScript;
 
     // Use this for initialization
     void Start () {
@@ -36,10 +38,15 @@ public class PlayerController : MonoBehaviour {
             else if (touch.phase == TouchPhase.Moved) // update the last position based on where they moved
             {
                 lp = touch.position;
+                Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                lightningMoveScript.ButtonForMove(Pos);
+
             }
             else if (touch.phase == TouchPhase.Ended) //check if the finger is removed from the screen
             {
                 lp = touch.position;  //last touch position. Ommitted if you use list
+                lightningMoveScript.MoveObject();
+
 
                 //Check if drag distance is greater than 20% of the screen height
                 if (Mathf.Abs(lp.x - fp.x) > dragDistance || Mathf.Abs(lp.y - fp.y) > dragDistance)
@@ -53,18 +60,23 @@ public class PlayerController : MonoBehaviour {
                 else
                 {   //It's a tap as the drag distance is less than 20% of the screen height
                     Debug.Log("Tap");
+
                 }
+            }
+            else
+            {
+
             }
 
 
-           /** if (Input.touchCount > 0)
-            {
-                Vector2 touchPosition = Input.GetTouch(0).position;
-                touchPosition.x = this.transform.position.x - Camera.main.transform.position.x;
-                touchPosition = Camera.main.ScreenToWorldPoint(touchPosition);
-                touchPosition.y = this.transform.position.y;
-                this.transform.position = Vector2.MoveTowards(this.transform.position, touchPosition, Time.deltaTime * speed);
-            }**/
+            /** if (Input.touchCount > 0)
+             {
+                 Vector2 touchPosition = Input.GetTouch(0).position;
+                 touchPosition.x = this.transform.position.x - Camera.main.transform.position.x;
+                 touchPosition = Camera.main.ScreenToWorldPoint(touchPosition);
+                 touchPosition.y = this.transform.position.y;
+                 this.transform.position = Vector2.MoveTowards(this.transform.position, touchPosition, Time.deltaTime * speed);
+             }**/
         }
     }
 

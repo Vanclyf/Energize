@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 50610148154207474}
   - component: {fileID: 61443001306430888}
   - component: {fileID: 114041289121554426}
+  - component: {fileID: 114926315114224816}
   m_Layer: 0
   m_Name: playerTemp
   m_TagString: Untagged
@@ -99,6 +100,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685d7155444b4a442a1c41228090edfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightningMoveScript: {fileID: 0}
+--- !u!114 &114926315114224816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223541748668220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ed101c815c64845b85241d19641842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWattBar: {fileID: 0}
+  text: {fileID: 0}
+  hitpoint: 100
 --- !u!212 &212117117790468518
 SpriteRenderer:
   m_ObjectHideFlags: 1

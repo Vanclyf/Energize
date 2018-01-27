@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Wall
   - Anchorpoint
+  - MetalWall
+  - WoodWall
+  - RubberWall
   layers:
   - Default
   - TransparentFX

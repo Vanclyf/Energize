@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  productGUID: e0bcef91a9d750f45a03d6e6d1fced43
+  productGUID: 657579c23f232334bbadd646c25a70cc
   AndroidProfiler: 0
   defaultScreenOrientation: 4
   targetDevice: 2
@@ -141,7 +141,7 @@ PlayerSettings:
   targetPixelDensity: 0
   resolutionScalingMode: 0
   applicationIdentifier:
-    Android: com.GGJ.Energize
+    Android: com.Henk.no
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16

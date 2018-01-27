@@ -12,11 +12,13 @@ public class LightningMoveScript : MonoBehaviour {
     float vel;
     int i = 1;
     public bool moving;
+    private bool wallCollision;
     public Text text;
     LineRenderer lr;
     Color color1, color2, color3;
     WattBarManager wattBarManager;
-    int lostWattage = 0;
+    float lostWattage = 0;
+    int wallHit;
     float timeGoneBy = 0;
 
     // Use this for initialization
@@ -41,8 +43,19 @@ public class LightningMoveScript : MonoBehaviour {
             timeGoneBy += Time.deltaTime;
             if (timeGoneBy >= 1)
             {
-                wattBarManager.LoseWatt(1);
-                lostWattage += 1;
+                if (wallHit == 1)
+                {
+                    wattBarManager.LoseWatt(0.5f);
+                    lostWattage += 0.5f;
+                }else if(wallHit == 2)
+                {
+                    wattBarManager.LoseWatt(1.2f);
+                    lostWattage += 1.2f;
+                }else if (wallHit == 3)
+                {
+                    wattBarManager.LoseWatt(2f);
+                    lostWattage -= 2f;
+                }
                 text.text = lostWattage + "%";
                 timeGoneBy = 0;
 
@@ -78,7 +91,19 @@ public class LightningMoveScript : MonoBehaviour {
         moving = false;
         lr.startColor = color3;
         lr.endColor = color3;
-
+        if (!moving) {
+            wallCollision = true;
+            if(collision.gameObject.tag == "MetalWall" )
+            {
+                wallHit = 1;
+            }else if(collision.gameObject.tag == "WoodWall")
+            {
+                wallHit = 2;
+            }else if(collision.gameObject.tag == "RubberWall")
+            {
+                wallHit = 3;
+            }
+        }
 
     }
 

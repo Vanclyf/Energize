@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     private void FixedUpdate()

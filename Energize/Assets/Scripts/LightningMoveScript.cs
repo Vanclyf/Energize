@@ -15,7 +15,9 @@ public class LightningMoveScript : MonoBehaviour {
     public Text text;
     LineRenderer lr;
     Color color1, color2, color3;
-
+    WattBarManager wattBarManager;
+    int lostWattage = 0;
+    float timeGoneBy = 0;
 
     // Use this for initialization
     void Start () {
@@ -24,6 +26,7 @@ public class LightningMoveScript : MonoBehaviour {
         color1 = lr.startColor;
         color2 = lr.endColor;
         color3 = Color.red;
+        wattBarManager = GetComponent<WattBarManager>();
     }
 
     // Update is called once per frame
@@ -35,7 +38,15 @@ public class LightningMoveScript : MonoBehaviour {
         else
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+            timeGoneBy += Time.deltaTime;
+            if (timeGoneBy >= 1)
+            {
+                wattBarManager.LoseWatt(1);
+                lostWattage += 1;
+                text.text = lostWattage + "%";
+                timeGoneBy = 0;
 
+            }
         }
 
     }
@@ -60,8 +71,9 @@ public class LightningMoveScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        text.text = "COLLOOOOOOOOO";
+        text.gameObject.SetActive(true);
 
+        lostWattage = 0;
         MoveObject();
         moving = false;
         lr.startColor = color3;
@@ -72,6 +84,7 @@ public class LightningMoveScript : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        text.gameObject.SetActive(false);
 
         lr.startColor = color1;
         lr.endColor = color2;

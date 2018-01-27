@@ -23,8 +23,8 @@ public class LightningMoveScript : MonoBehaviour {
     void Start () {
         m_Rigidbody = GetComponent<Rigidbody2D>();
         lr = transform.parent.GetComponent<LineRenderer>();
-        color1 = lr.startColor;
-        color2 = lr.endColor;
+        color1 = Color.white;
+        color2 = Color.blue;
         color3 = Color.red;
         wattBarManager = GetComponent<WattBarManager>();
     }
@@ -42,8 +42,6 @@ public class LightningMoveScript : MonoBehaviour {
             if (timeGoneBy >= 1)
             {
                 wattBarManager.LoseWatt(1);
-                lostWattage += 1;
-                text.text = lostWattage + "%";
                 timeGoneBy = 0;
 
             }
@@ -71,8 +69,6 @@ public class LightningMoveScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        text.gameObject.SetActive(true);
-
         lostWattage = 0;
         MoveObject();
         moving = false;
@@ -84,12 +80,13 @@ public class LightningMoveScript : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        text.gameObject.SetActive(false);
 
         lr.startColor = color1;
         lr.endColor = color2;
+        GameObject particleSystem = new GameObject();
 
+        particleSystem = Instantiate(Resources.Load("ShockParticleEmitter"), transform.position, Quaternion.identity) as GameObject;
+
+        Destroy(particleSystem, 2f);
     }
-
-
 }

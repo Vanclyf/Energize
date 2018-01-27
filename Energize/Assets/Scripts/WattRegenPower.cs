@@ -21,7 +21,7 @@ public class WattRegenPower : MonoBehaviour {
         wattIncrease = 30;
         maxWatt = 100;
 
-        player = GameObject.Find("playerTemp");
+        player = GameObject.Find("CapsuleEnd");
         WattBarManager = player.GetComponent<WattBarManager>();
     }
 

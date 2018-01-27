@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class LightningMoveScript : MonoBehaviour {
 
     public GameObject obj1, obj2;
-    public Transform trans1, trans2, trans3, trans4;
     public float time;
     Rigidbody2D m_Rigidbody;
     Vector3 dir;
@@ -14,14 +13,17 @@ public class LightningMoveScript : MonoBehaviour {
     int i = 1;
     public bool moving;
     public Text text;
-
-
+    LineRenderer lr;
+    Color color1, color2, color3;
 
 
     // Use this for initialization
     void Start () {
         m_Rigidbody = GetComponent<Rigidbody2D>();
-
+        lr = transform.parent.GetComponent<LineRenderer>();
+        color1 = lr.startColor;
+        color2 = lr.endColor;
+        color3 = Color.red;
     }
 
     // Update is called once per frame
@@ -49,7 +51,10 @@ public class LightningMoveScript : MonoBehaviour {
 
     public void MoveObject()
     {
-        iTween.MoveTo(obj1, obj2.transform.position, time);
+        //iTween.MoveTo(obj1, obj2.transform.position, time);
+        iTween.MoveTo(obj1, iTween.Hash("x", transform.position.x, "y", transform.position.y, "speed", 500,
+            "easetype", "linear"));
+
 
     }
 
@@ -59,5 +64,19 @@ public class LightningMoveScript : MonoBehaviour {
 
         MoveObject();
         moving = false;
+        lr.startColor = color3;
+        lr.endColor = color3;
+
+
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+
+        lr.startColor = color1;
+        lr.endColor = color2;
+
+    }
+
+
 }

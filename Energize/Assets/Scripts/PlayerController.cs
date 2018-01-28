@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour {
     Transform[] anchorPointsArray;
     private Vector2 dir;
     bool inAir = false;
+    public GameObject bottom;
+    public float distance;
 
     // Use this for initialization
     void Start () {
@@ -47,7 +49,16 @@ public class PlayerController : MonoBehaviour {
             SceneManager.LoadScene(0);
         }*/
 
-        if(inAir == true)
+        if (transform.position.y - bottom.transform.position.y > 100f)
+        {
+            transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.6f;
+        }
+        else
+        {
+            transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.3f;
+        }
+        distance = transform.position.y - bottom.transform.position.y;
+        if (inAir == true)
         {
             inAir = lightningMoveScript.moving;
         }

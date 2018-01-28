@@ -126,6 +126,12 @@ public class LightningMoveScript : MonoBehaviour {
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
+            else if (collision.gameObject.tag == "SwingingTire")
+            {
+                OnWall();
+                dir = new Vector3(dir.x * -1, dir.y * -1, dir.z);
+                ButtonForMove(dir, vel);
+            }
             else
             {
                 OnWall();
@@ -143,7 +149,6 @@ public class LightningMoveScript : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-
         lr.startColor = color1;
         lr.endColor = color2;
         GameObject particleSystem = new GameObject();

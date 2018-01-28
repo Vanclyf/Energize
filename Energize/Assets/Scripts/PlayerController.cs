@@ -42,10 +42,10 @@ public class PlayerController : MonoBehaviour {
     private void Update()
     {
         //RectTransform objectRectTransform = canvas.GetComponent<RectTransform>();
-        if (transform.position.y > 280f || transform.position.y < -50)
+        /*if (transform.position.y > 280f || transform.position.y < -50)
         {
             SceneManager.LoadScene(0);
-        }
+        }*/
 
         if(inAir == true)
         {

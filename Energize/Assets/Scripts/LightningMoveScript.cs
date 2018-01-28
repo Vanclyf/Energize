@@ -70,6 +70,9 @@ public class LightningMoveScript : MonoBehaviour {
                     wattBarManager.LoseWatt(2f);
                     lostWattage -= 2f;
                 }
+                //text.text = lostWattage + "%";
+                wattBarManager.UpdateHealthBar();
+
                 timeGoneBy = 0;
 
             }

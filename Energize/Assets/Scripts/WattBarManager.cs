@@ -27,20 +27,8 @@ public class WattBarManager : MonoBehaviour
         currentState = BATTERY_STATES.BATTERY_GREEN;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            LoseWatt(1);
-        }
 
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            GainWatt(1);
-        }
-    }
-
-    private void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         float ratio = hitpoint / maxHitpoint;
         currentWattBar.rectTransform.localScale = new Vector3(ratio, 1, 1);

@@ -5,12 +5,15 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
     private int speed = 5;
     private Vector3 fp;   //First touch position
     private Vector3 lp;   //Last touch position
     private float dragDistance;  //minimum distance for a swipe to be registered
     private Vector3 pos;
+    public WattBarManager manager;
+    public DataController dataController;
     public LightningMoveScript lightningMoveScript;
     private Vector2 nextPosition;
     public GameObject anchorPointsParent;
@@ -22,7 +25,8 @@ public class PlayerController : MonoBehaviour {
     public float distance;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //initializeVariables();
         lightningMoveScript = GetComponent<LightningMoveScript>();
 
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour {
             SceneManager.LoadScene(0);
         }*/
 
+
         if (transform.position.y - bottom.transform.position.y > 100f)
         {
             transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.6f;
@@ -58,13 +63,14 @@ public class PlayerController : MonoBehaviour {
             transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.3f;
         }
         distance = transform.position.y - bottom.transform.position.y;
+
         if (inAir == true)
         {
             inAir = lightningMoveScript.moving;
         }
         pos = transform.position;
 
-        if(inAir == false)
+        if (inAir == false)
         {
             if (Input.touchCount == 1) // user is touching the screen with a single touch
             {
@@ -92,7 +98,10 @@ public class PlayerController : MonoBehaviour {
                     lightningMoveScript.ButtonForMove(dir, 250);
                     inAir = true;
 
-
+                    if (dataController.GetPlayerHighScore() < Mathf.RoundToInt(transform.position.y))
+                    {
+                        dataController.SubmitNewPlayerScore(Mathf.RoundToInt(transform.position.y));
+                    }
                     //Check if drag distance is greater than 20% of the screen height
                     if (Mathf.Abs(lp.x - fp.x) > dragDistance || Mathf.Abs(lp.y - fp.y) > dragDistance)
                     {//It's a drag
@@ -113,14 +122,14 @@ public class PlayerController : MonoBehaviour {
 
                 }
             }
-            }
+        }
 
-        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnCollisionEnter2RoundToInt(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Wall")
         {
             this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
         }

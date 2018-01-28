@@ -21,13 +21,12 @@ public class WattRegenPower : MonoBehaviour {
         wattIncrease = 30;
         maxWatt = 100;
 
-        player = GameObject.Find("CapsuleEnd");
         WattBarManager = player.GetComponent<WattBarManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player" && onCooldown == false)
+        if(other.gameObject.tag == "Player")
         {
            
             float hp = WattBarManager.hitpoint;
@@ -41,22 +40,7 @@ public class WattRegenPower : MonoBehaviour {
                 WattBarManager.GainWatt(wattIncrease);
             }
 
-            GameObject.Destroy(this);
-            onCooldown = true;
-
-
         }
-    }
-
-    public void _Spawn()
-    {
-            
-        Vector3 pos = new Vector3(Random.Range(0.2f , 0.8f), Random.Range(1.1f, 1.3f ), 0);
-        gameObject.GetComponent<Transform>().localPosition = Camera.main.ViewportToWorldPoint(pos);
-        //Vector3 playerPos = player.GetComponent<Transform>().localPosition;
-        
-        onCooldown = false;
-
     }
 
 }

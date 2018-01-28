@@ -9,6 +9,10 @@ TagManager:
   - MetalWall
   - WoodWall
   - RubberWall
+  - TopNBottom
+  - Obstacle
+  - Mirror
+  - NextLevel
   layers:
   - Default
   - TransparentFX

@@ -149,7 +149,9 @@ public class LightningMoveScript : MonoBehaviour {
         GameObject particleSystem = new GameObject();
         wallCollision = false;
 
-        particleSystem = Instantiate(Resources.Load("ShockParticleEmitter"), transform.position, Quaternion.identity) as GameObject;
+        particleSystem = Instantiate(Resources.Load("ShockParticleEmitter")) as GameObject;
+        particleSystem.transform.parent = transform.parent;
+        particleSystem.transform.position = transform.position;
 
         Destroy(particleSystem, 2f);
     }

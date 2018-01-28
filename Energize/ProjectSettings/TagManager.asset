@@ -13,6 +13,7 @@ TagManager:
   - Obstacle
   - Mirror
   - NextLevel
+  - SwingingTire
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - 
   - 
   - PlayerCollision
-  - 
+  - Brick
   - 
   - 
   - 

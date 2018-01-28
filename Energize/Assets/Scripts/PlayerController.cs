@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
     private Vector2 dir;
     bool inAir = false;
     public GameObject bottom;
-    public float distance;
+    bool startCamera = false;
 
     // Use this for initialization
     void Start () {
@@ -48,16 +48,18 @@ public class PlayerController : MonoBehaviour {
         {
             SceneManager.LoadScene(0);
         }*/
+        if (startCamera)
+        {
+            if (transform.position.y - bottom.transform.position.y > 100f)
+            {
+                transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.7f;
+            }
+            else
+            {
+                transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.4f;
+            }
+        }
 
-        if (transform.position.y - bottom.transform.position.y > 100f)
-        {
-            transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.6f;
-        }
-        else
-        {
-            transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.3f;
-        }
-        distance = transform.position.y - bottom.transform.position.y;
         if (inAir == true)
         {
             inAir = lightningMoveScript.moving;
@@ -68,7 +70,11 @@ public class PlayerController : MonoBehaviour {
         {
             if (Input.touchCount == 1) // user is touching the screen with a single touch
             {
-
+                if (!startCamera)
+                {
+                    transform.parent.parent.GetComponent<Level>().cameraSpeed = -0.4f;
+                    startCamera = true;
+                }
                 Touch touch = Input.GetTouch(0); // get the touch
                 if (touch.phase == TouchPhase.Began) //check for the first touch
                 {

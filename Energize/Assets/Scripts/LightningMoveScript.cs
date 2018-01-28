@@ -59,16 +59,16 @@ public class LightningMoveScript : MonoBehaviour {
             {
                 if (wallHit == 1)
                 {
-                    wattBarManager.LoseWatt(0.5f);
-                    lostWattage += 0.5f;
+                    wattBarManager.LoseWatt(2f);
+                    lostWattage += 10f;
                 }else if(wallHit == 2)
                 {
-                    wattBarManager.LoseWatt(1f);
-                    lostWattage += 1.2f;
+                    wattBarManager.LoseWatt(5f);
+                    lostWattage += 15;
                 }else if (wallHit == 3)
                 {
-                    wattBarManager.LoseWatt(2f);
-                    lostWattage -= 2f;
+                    wattBarManager.LoseWatt(7f);
+                    lostWattage -= 20f;
                 }
                 timeGoneBy = 0;
 
@@ -101,7 +101,6 @@ public class LightningMoveScript : MonoBehaviour {
         lostWattage = 0;
         if (!moving) {
 
-            wallCollision = true;
             if (!_audioSource.isPlaying) {
                  _audioSource.PlayOneShot(playerLand, 0.5f);
             }
@@ -131,6 +130,8 @@ public class LightningMoveScript : MonoBehaviour {
                 OnWall();
                 dir = new Vector3(dir.x, dir.y * -1, dir.z);
                 ButtonForMove(dir, vel);
+                wattBarManager.LoseWatt(2f);
+
             }
             else if (collision.gameObject.tag == "Mirror")
             {

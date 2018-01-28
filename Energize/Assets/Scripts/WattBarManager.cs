@@ -121,7 +121,7 @@ public class WattBarManager : MonoBehaviour
         {
             currentState = BATTERY_STATES.BATTERY_DEAD;
             ChangeColor();
-
+            Application.LoadLevel(Application.loadedLevel);
         }
     }
 

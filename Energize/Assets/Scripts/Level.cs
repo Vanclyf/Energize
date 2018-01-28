@@ -8,7 +8,7 @@ public class Level : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        cameraSpeed = -0.2f;
+        cameraSpeed = 0;
 	}
 
     // Update is called once per frame

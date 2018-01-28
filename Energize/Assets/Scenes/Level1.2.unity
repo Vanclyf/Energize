@@ -285,9 +285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685d7155444b4a442a1c41228090edfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 70656328}
   lightningMoveScript: {fileID: 0}
   anchorPointsParent: {fileID: 0}
-  canvas: {fileID: 0}
+  canvas: {fileID: 507593725}
 --- !u!70 &70656324
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2342,7 +2343,7 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 300
-    m_Alignment: 4
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2364,16 +2365,16 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 957209879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000001367443}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 284551229}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7000122, y: 619.2}
-  m_SizeDelta: {x: 260.8, y: 103.9}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 244.89996, y: -55.349976}
+  m_SizeDelta: {x: 260.8, y: 103.900024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &985719627
 GameObject:
@@ -4267,7 +4268,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 34.1, y: 619.2}
-  m_SizeDelta: {x: 698.6, y: 103.9}
+  m_SizeDelta: {x: 421.6, y: 103.9}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1921543776
 GameObject:

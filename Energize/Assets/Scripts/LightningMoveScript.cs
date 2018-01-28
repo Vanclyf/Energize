@@ -43,7 +43,6 @@ public class LightningMoveScript : MonoBehaviour {
             timeGoneBy += Time.deltaTime;
             if (timeGoneBy >= 1)
             {
-
                 if (wallHit == 1)
                 {
                     wattBarManager.LoseWatt(0.5f);
@@ -57,9 +56,9 @@ public class LightningMoveScript : MonoBehaviour {
                     wattBarManager.LoseWatt(2f);
                     lostWattage -= 2f;
                 }
-
                 //text.text = lostWattage + "%";
                 wattBarManager.UpdateHealthBar();
+
                 timeGoneBy = 0;
 
             }

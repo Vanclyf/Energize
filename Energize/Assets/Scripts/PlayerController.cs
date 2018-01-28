@@ -19,16 +19,14 @@ public class PlayerController : MonoBehaviour {
     private Vector2 dir;
     bool inAir = false;
 
- 
-
     // Use this for initialization
     void Start () {
-        initializeVariables();
+        //initializeVariables();
         lightningMoveScript = GetComponent<LightningMoveScript>();
 
     }
 
-    private void initializeVariables()
+    /*private void initializeVariables()
     {
         pos = transform.position;
         dragDistance = Screen.height * 15 / 100; //dragDistance is 15% height of the screen
@@ -38,16 +36,16 @@ public class PlayerController : MonoBehaviour {
             anchorPointsArray[i] = anchorPointsParent.transform.GetChild(i);
         }
 
-    }
+    }*/
 
     // Update is called once per frame
     private void Update()
     {
-        RectTransform objectRectTransform = canvas.GetComponent<RectTransform>();
-        if (transform.position.y > 280f || transform.position.y < -50)
+        //RectTransform objectRectTransform = canvas.GetComponent<RectTransform>();
+        /*if (transform.position.y > 280f || transform.position.y < -50)
         {
             SceneManager.LoadScene(0);
-        }
+        }*/
 
         if(inAir == true)
         {

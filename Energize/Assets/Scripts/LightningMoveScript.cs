@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LightningMoveScript : MonoBehaviour {
 
@@ -12,18 +13,23 @@ public class LightningMoveScript : MonoBehaviour {
     float vel;
     int i = 1;
     public bool moving;
+    private bool wallCollision;
     public Text text;
     LineRenderer lr;
     Color color1, color2, color3;
-
+    WattBarManager wattBarManager;
+    float lostWattage = 0;
+    int wallHit;
+    float timeGoneBy = 0;
 
     // Use this for initialization
     void Start () {
         m_Rigidbody = GetComponent<Rigidbody2D>();
         lr = transform.parent.GetComponent<LineRenderer>();
-        color1 = lr.startColor;
-        color2 = lr.endColor;
+        color1 = Color.white;
+        color2 = Color.blue;
         color3 = Color.red;
+        wattBarManager = GetComponent<WattBarManager>();
     }
 
     // Update is called once per frame
@@ -34,8 +40,30 @@ public class LightningMoveScript : MonoBehaviour {
         }
         else
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+            if (wallCollision)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
 
+            }
+            timeGoneBy += Time.deltaTime;
+            if (timeGoneBy >= 1)
+            {
+                if (wallHit == 1)
+                {
+                    wattBarManager.LoseWatt(0.5f);
+                    lostWattage += 0.5f;
+                }else if(wallHit == 2)
+                {
+                    wattBarManager.LoseWatt(1f);
+                    lostWattage += 1.2f;
+                }else if (wallHit == 3)
+                {
+                    wattBarManager.LoseWatt(2f);
+                    lostWattage -= 2f;
+                }
+                timeGoneBy = 0;
+
+            }
         }
 
     }
@@ -60,14 +88,57 @@ public class LightningMoveScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        text.text = "COLLOOOOOOOOO";
-
-        MoveObject();
         moving = false;
+        lostWattage = 0;
+        if (!moving) {
+            if(collision.gameObject.tag == "MetalWall" )
+            {
+                wallHit = 1;
+                OnWall();
+                wallCollision = true;
+            }
+            else if(collision.gameObject.tag == "WoodWall")
+            {
+                wallHit = 2;
+                OnWall();
+                wallCollision = true;
+
+            }
+            else if(collision.gameObject.tag == "RubberWall")
+            {
+                wallHit = 3;
+                OnWall();
+                wallCollision = true;
+            }
+            else if(collision.gameObject.tag == "TopNBottom")
+            {
+                OnWall();
+                dir = new Vector3(dir.x, dir.y * -1, dir.z);
+                ButtonForMove(dir, vel);
+            }
+            else if (collision.gameObject.tag == "Mirror")
+            {
+                OnWall();
+                dir = new Vector3(dir.x * -1, dir.y, dir.z);
+                ButtonForMove(dir, vel);
+            }
+            else if (collision.gameObject.tag == "NextLevel")
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+            else
+            {
+                OnWall();
+            }
+        }
+
+    }
+
+    void OnWall()
+    {
+        MoveObject();
         lr.startColor = color3;
         lr.endColor = color3;
-
-
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -75,8 +146,11 @@ public class LightningMoveScript : MonoBehaviour {
 
         lr.startColor = color1;
         lr.endColor = color2;
+        GameObject particleSystem = new GameObject();
+        wallCollision = false;
 
+        particleSystem = Instantiate(Resources.Load("ShockParticleEmitter"), transform.position, Quaternion.identity) as GameObject;
+
+        Destroy(particleSystem, 2f);
     }
-
-
 }

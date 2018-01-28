@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpManager : MonoBehaviour {
+/**public class PowerUpManager : MonoBehaviour {
     [SerializeField] private float coolDownTimer;
 
     const float _MIN_SPAWN_DELAY = 25f;
@@ -29,4 +29,4 @@ public class PowerUpManager : MonoBehaviour {
             coolDownTimer = 0;
         }
     }
-}
+}**/

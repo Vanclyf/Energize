@@ -22,6 +22,11 @@ public class LightningMoveScript : MonoBehaviour {
     int wallHit;
     float timeGoneBy = 0;
 
+    //audio
+    [SerializeField] private AudioClip playerLand, playerJump;
+    private AudioSource _audioSource;
+
+
     // Use this for initialization
     void Start () {
         m_Rigidbody = GetComponent<Rigidbody2D>();
@@ -30,6 +35,8 @@ public class LightningMoveScript : MonoBehaviour {
         color2 = Color.blue;
         color3 = Color.red;
         wattBarManager = GetComponent<WattBarManager>();
+        _audioSource = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -37,6 +44,7 @@ public class LightningMoveScript : MonoBehaviour {
         if (moving)
         {
             transform.position += dir * vel * Time.deltaTime;
+
         }
         else
         {
@@ -45,6 +53,7 @@ public class LightningMoveScript : MonoBehaviour {
                 transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
 
             }
+
             timeGoneBy += Time.deltaTime;
             if (timeGoneBy >= 1)
             {
@@ -91,8 +100,15 @@ public class LightningMoveScript : MonoBehaviour {
         moving = false;
         lostWattage = 0;
         if (!moving) {
-            if(collision.gameObject.tag == "MetalWall" )
+
+            wallCollision = true;
+            if (!_audioSource.isPlaying) {
+                 _audioSource.PlayOneShot(playerLand, 0.5f);
+            }
+           
+            if (collision.gameObject.tag == "MetalWall" )
             {
+                _audioSource.PlayOneShot(playerLand);
                 wallHit = 1;
                 OnWall();
                 wallCollision = true;
@@ -152,12 +168,17 @@ public class LightningMoveScript : MonoBehaviour {
         lr.startColor = color1;
         lr.endColor = color2;
         GameObject particleSystem = new GameObject();
+
+        particleSystem = Instantiate(Resources.Load("ShockParticleEmitter"), transform.position, Quaternion.identity) as GameObject;
+        if (!_audioSource.isPlaying) { 
+            _audioSource.PlayOneShot(playerJump, 0.5f);
+        }
+
         wallCollision = false;
 
         particleSystem = Instantiate(Resources.Load("ShockParticleEmitter")) as GameObject;
         particleSystem.transform.parent = transform.parent;
         particleSystem.transform.position = transform.position;
-
         Destroy(particleSystem, 2f);
     }
 }
